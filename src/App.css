@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.nav-item-custom:hover {
+    background-color: #43464b;
+}
