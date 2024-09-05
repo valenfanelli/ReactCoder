@@ -1,18 +1,28 @@
-import ImagenGreeting from './../img/greeting.jpg'
-export const ItemListContainer = ( {Greeting} ) => {
+import ProductList from "./ProductList"
+import { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import { getProducts, getProductsByCategoryId } from '../asyncMock';
+
+export const ItemListContainer = ({Greeting}) => {
+    const [productos, setProductos] = useState([])
+    //nombres para imprimir la categoria dependiendo del parametro
+    const nombresCat = ['computadoras', 'auriculares', 'telefonos'];
+    const {category_id} = useParams();
+    useEffect(()=>{
+        const funcion = category_id ? getProductsByCategoryId : getProducts;
+        funcion(category_id)
+        .then(response => {
+            setProductos(response)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }, [category_id])
     return <>
-        <div className="card border-secondary itemlist m-4" style={{width: '18rem'}}>
-            <img src={ImagenGreeting} alt="imagen de saludo" className="card-img-top" />
-            <div className="card-body">
-                <h3 className="card-title">{Greeting}</h3>
-                <ul className="card-text list-group list-group-flush">
-                    <li className='list-group-item'>Uno</li>
-                    <li className='list-group-item'>Dos</li>
-                    <li className='list-group-item'>Tres</li>
-                    <li className='list-group-item'>Cuatro</li>
-                </ul>
-            </div>
-            
-        </div>
+      <div className="container">
+        <h1 className="text-center fs-6 mt-3">{Greeting} {nombresCat[category_id-1]}</h1>
+        <ProductList productos={productos} />
+      </div>
+      
     </>
 }
