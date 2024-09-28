@@ -1,5 +1,5 @@
 import { useState } from 'react';
-function ItemCount() {
+function ItemCount({onAdd}) {
     const [contador, setContador] = useState(0)
     function sumar() {
         setContador(contador + 1)
@@ -24,7 +24,7 @@ function ItemCount() {
                 </button>
             </div>
             <div className='d-flex justify-content-center'>
-                <button className='btn btn-info btn-sm d-flex justify-content-center align-items-center mt-3'>
+                <button onClick={() => onAdd({contador})} className='btn btn-info btn-sm d-flex justify-content-center align-items-center mt-3'>
                     <p className='fs-7 m-0'>Agregar al carrito</p>
                 </button>
             </div>
