@@ -18,7 +18,7 @@ export const CartDetail = () => {
     const handleChange = (e) => {
         setComprador({
             ...comprador,
-            [e.target.nombre] : e.target.value
+            [e.target.name] : e.target.value
         })
     }
     const submit = (e) => {
