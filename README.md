@@ -7,7 +7,6 @@ El backend esta implementado con Google Firebase
 
 Instrucciones para instalar el proyecto.
 
-```bash
 # Clonar el repositorio
 git clone https://github.com/usuario/nombre-proyecto.git
 
@@ -17,13 +16,7 @@ cd nombre-proyecto
 # Instalar dependencias
 npm install
 
-### Uso
-- Instrucciones sobre cómo utilizar el proyecto.
-- Puedes proporcionar ejemplos de código o pasos para probar ciertas funcionalidades.
-- Incluye capturas de pantalla si es necesario.
-
-```md
-## Uso
+# Uso
 Para utilizar la aplicación, abre [http://localhost:3000](http://localhost:3000) en tu navegador después de ejecutar `npm start`. 
 
 ### Ejemplo:
