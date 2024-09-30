@@ -12,14 +12,14 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID
+  apiKey: "AIzaSyD0Z5bVBi7dXipElK2xJt3gBJa5RO-gBwg",  // Reemplaza con tu clave
+  authDomain: "valentech-ae5dd.firebaseapp.com",
+  projectId: "valentech-ae5dd",
+  storageBucket: "valentech-ae5dd.appspot.com",
+  messagingSenderId: "266566119713",
+  appId: "1:266566119713:web:0a4c83a047ccc06dad0e60"
 };
-
+console.log(console.log(process.env.REACT_APP_FIREBASE_API_KEY));
 
 
 // Initialize Firebase
