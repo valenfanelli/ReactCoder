@@ -6,7 +6,8 @@ import { Orden } from "./Orden";
 
 export const CartDetail = () => {
     const {cart, removeItem, clear} = useContext(CartContext);
-    const [orderId, setOrderId] = useState('')
+    //Este contexto ayuda para imprimir condicionalmente el id de la orden o el detalle del carrito
+    const [orderId, setOrderId] = useState('') 
     const [comprador, setComprador] = useState({
         nombre: "",
         email: ""
@@ -30,6 +31,7 @@ export const CartDetail = () => {
         if(!comprador.email){
             localError.email = "El email es obligatorio"
         }
+        //si no hay errores en el formulario
         if(Object.keys(localError).length === 0){
             addToCart();
             
@@ -48,37 +50,38 @@ export const CartDetail = () => {
         return totalCompra //armar la cuenta
     }
     const addToCart = (orden) => {
-        const db = getFirestore();
-        const orderCollection = collection(db, "orders");
-        const pedido = {
-            comprador,
-            items: cart,
-            total: getTotal(),
-            date: new Date()
-        }
-        addDoc(orderCollection, pedido)
-        //Por cada producto actualizar stock
-        .then(res => {
-            setOrderId(res.id)
-            clear()
-            setComprador({
-                nombre:'',
-                email: ''
+        if(cart.length > 0){ //si no agrego productos no puede enviar el formulario
+            const db = getFirestore();
+            const orderCollection = collection(db, "orders");
+            const pedido = {
+                comprador,
+                items: cart,
+                total: getTotal(),
+                date: new Date()
+            }
+            addDoc(orderCollection, pedido)
+            .then(res => {
+                setOrderId(res.id)
+                clear()
+                setComprador({
+                    nombre:'',
+                    email: ''
+                })
+                // Recorrer el carrito para actualizar stock
+                cart.forEach(async (producto) => {
+                    const productRef = doc(db, "items", producto.id); // Obtener referencia del producto
+                    const productSnap = await getDoc(productRef); // Obtener el documento del producto
+
+                    if (productSnap.exists()) {
+                        const currentStock = productSnap.data().stock; // Obtener el stock actual
+                        const newStock = currentStock - producto.cantidad.contador; // Calcular el nuevo stock
+
+                        // Actualizar el stock del producto
+                        await updateDoc(productRef, { stock: newStock });
+                    }
+                });
             })
-             // Actualizar stock de cada producto
-             cart.forEach(async (producto) => {
-                const productRef = doc(db, "items", producto.id); // Obtener referencia del producto
-                const productSnap = await getDoc(productRef); // Obtener el documento del producto
-
-                if (productSnap.exists()) {
-                    const currentStock = productSnap.data().stock; // Obtener el stock actual
-                    const newStock = currentStock - producto.cantidad.contador; // Calcular el nuevo stock
-
-                    // Actualizar el stock del producto
-                    await updateDoc(productRef, { stock: newStock });
-                }
-            });
-        })
+        }
     }
     return <>
         {!orderId && <div className="container p-2">
